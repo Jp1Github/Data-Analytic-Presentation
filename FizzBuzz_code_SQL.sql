@@ -13,7 +13,7 @@ VALUES
     (16), (17), (18), (19), (20);
 
 SELECT * FROM fizzBuzzNum
-order by num;
+ORDER BY num;
 
 SELECT num,
 CASE
