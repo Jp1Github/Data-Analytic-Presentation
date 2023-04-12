@@ -9,40 +9,45 @@ CREATE TABLE Employee (
     firstName VARCHAR(50),
     lastName VARCHAR(50),
     date_Of_Birth DATE,
-    gender 	VARCHAR (10),
-	position_ID MEDIUMINT
-    );
-    select * from employee;
+    gender VARCHAR (10),
+    position_ID MEDIUMINT
+);
+    
+SELECT * 
+FROM Employee;
 
 -- Creating table employee and job title
 DROP TABLE IF EXISTS employeePosition;
 CREATE TABLE employeePosition (
-    position_ID MEDIUMINT,
-    jobTitle VARCHAR(50)
-    
+             position_ID MEDIUMINT,
+             jobTitle VARCHAR(50)
 );
-select * from employeePosition;
+    
+SELECT *
+FROM employeePosition;
 
 -- Creating table for employee ID, position ID and monthly salary
 DROP TABLE IF EXISTS employeeSalary;
 CREATE TABLE employeeSalary (
-	employeeID MEDIUMINT,
-    position_ID MEDIUMINT,
-    salary_Per_Month INT
+	     employeeID MEDIUMINT,
+             position_ID MEDIUMINT,
+             salary_Per_Month INT
 );
-select * from employeeSalary;
+
+SELECT * 
+FROM employeeSalary;
 
 /* Populate the  following Tables. Using INSERT INTO table_name VALUES.
 Wrote insert into statement all the column name to be explicit!. This can be omitted but not a good practice!
 -- Employee Table */
 INSERT INTO Employee (
 	employeeID,
-    firstName,
-    lastName,
-    date_Of_Birth,
-    gender,
+   	firstName,
+    	lastName,
+    	date_Of_Birth,
+    	gender,
 	position_ID 
-    )
+)
 VALUES
 (1, 'Jaycee', 'Hall', '2001-01-28', 'Female', 2),
 (2, 'Sue', 'Matterson', '2000-04-12', 'Female', 1),
@@ -64,8 +69,8 @@ VALUES
 
 -- employeePosition Table.
 INSERT INTO employeePosition (
-    position_ID,
-    jobTitle
+	position_ID,
+	jobTitle
 )
 VALUES
 (1, 'Assembler'),
@@ -86,8 +91,8 @@ VALUES
 -- employeeSalary Table.
 INSERT INTO employeeSalary (
 	employeeID,
-    position_ID,
-    salary_Per_Month
+    	position_ID,
+    	salary_Per_Month
 )
 VALUES
 (1, 2, 3200),
