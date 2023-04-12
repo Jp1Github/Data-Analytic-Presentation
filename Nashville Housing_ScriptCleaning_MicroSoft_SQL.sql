@@ -5,7 +5,6 @@ USE PortfolioProject
 
 SELECT * FROM [dbo.NashvilleHousing]
 
-
 -------------------------------------------------------------------
 -- Standardize Date column from DATETIME to DATE
 -------------------------------------------------------------------
@@ -39,10 +38,7 @@ SET SaleDateConverted = CAST(SaleDate AS DATE)
 
   Then go to the dbo.dbo.NashvilleHousing and right click Design and a new tab will pop out.
   Then choose the SaleDateConverted row and drag it beside the SaleDate
-
 */
-
-
 
 -------------------------------------------------------------------
 -- Some of the data in the propert address is missing.
@@ -59,19 +55,19 @@ TODO - FIND TO COUNT ROW AND DIVIDE WITH ANOTHER COUNT ROW.
 
 SELECT (COUNT(b.PropertyAddress) - count(a.PropertyAddress))/COUNT(a.UniqueID)
 FROM [dbo.NashvilleHousing] a
-JOIN [dbo.NashvilleHousing] b
-ON a.[PropertyAddress] = b.[PropertyAddress]
+	JOIN [dbo.NashvilleHousing] b
+	ON a.[PropertyAddress] = b.[PropertyAddress]
 WHERE a.PropertyAddress IS NOT NULL AND b.PropertyAddress IS NULL
 
-select COUNT(a.PropertyAddress) - count(b.PropertyAddress) 
+SELECT COUNT(a.PropertyAddress) - count(b.PropertyAddress) 
 FROM [dbo.NashvilleHousing] a
-FULL JOIN [dbo.NashvilleHousing] b
-ON a.[PropertyAddress] = b.[PropertyAddress]
+	FULL JOIN [dbo.NashvilleHousing] b
+	ON a.[PropertyAddress] = b.[PropertyAddress]
 WHERE a.PropertyAddress IS NOT NULL AND b.PropertyAddress IS NULL
 
-select a.PropertyAddress/count(*)
-from [dbo.NashvilleHousing]
-where (
+SELECT a.PropertyAddress/count(*)
+FROM [dbo.NashvilleHousing]
+WHERE (
 SELECT count(*) - count(PropertyAddress) PropertyAddressNull FROM [dbo.NashvilleHousing]
 ) a
 
@@ -81,9 +77,9 @@ SELECT count(*) - count(PropertyAddress) PropertyAddressNull FROM [dbo.Nashville
 
 SELECT a.ParcelID, a.PropertyAddress, b.ParcelID, b.PropertyAddress, ISNULL(b.PropertyAddress, a.PropertyAddress)
 FROM [dbo.NashvilleHousing] a
-JOIN [dbo.NashvilleHousing] b
-ON a.ParcelID = b.ParcelID
-AND a.UniqueID <> b.UniqueID
+	JOIN [dbo.NashvilleHousing] b
+	ON a.ParcelID = b.ParcelID
+	AND a.UniqueID <> b.UniqueID
 WHERE b.PropertyAddress IS NULL
 
 -- After confirmation that it populate a column then do the code below
@@ -92,12 +88,10 @@ WHERE b.PropertyAddress IS NULL
 UPDATE a 
 SET PropertyAddress = ISNULL(a.PropertyAddress, b.PropertyAddress)
 FROM [dbo.NashvilleHousing] a
-JOIN [dbo.NashvilleHousing] b
-ON a.ParcelID = b.ParcelID
-AND a.UniqueID <> b.UniqueID
+	JOIN [dbo.NashvilleHousing] b
+	ON a.ParcelID = b.ParcelID
+	AND a.UniqueID <> b.UniqueID
 WHERE a.PropertyAddress IS NULL
-
-
 
 -------------------------------------------------------------------
 -- Splitting the Address into three columns (Address, City and State)
@@ -108,13 +102,13 @@ WHERE a.PropertyAddress IS NULL
 SELECT PropertyAddress FROM [dbo.NashvilleHousing]
 
 SELECT PropertyAddress, 
-SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress)) AS Address
+	SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress)) AS Address
 FROM [dbo.NashvilleHousing]
 
 
 SELECT PropertyAddress, 
-SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1) AS Address,
-SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1, LEN(PropertyAddress)) AS Address2
+	SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1) AS Address,
+	SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1, LEN(PropertyAddress)) AS Address2
 FROM [dbo.NashvilleHousing]
 	-- Note on above code when Alias it does not want to start in a number like 2ndAddress
 
@@ -137,9 +131,9 @@ SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddres
 SELECT OwnerAddress FROM [dbo.NashvilleHousing] WHERE OwnerAddress IS NOT NULL
 
 SELECT
-PARSENAME(REPLACE(OwnerAddress,',','.'), 3),
-PARSENAME(REPLACE(OwnerAddress,',','.'), 2),
-PARSENAME(REPLACE(OwnerAddress,',','.'), 1)
+	PARSENAME(REPLACE(OwnerAddress,',','.'), 3),
+	PARSENAME(REPLACE(OwnerAddress,',','.'), 2),
+	PARSENAME(REPLACE(OwnerAddress,',','.'), 1)
 FROM [dbo.NashvilleHousing] WHERE OwnerAddress IS NOT NULL
 
 	-- Add columns
@@ -170,8 +164,6 @@ SELECT * FROM [dbo.NashvilleHousing]
 
 /* The PARSENAME AND REPLACE seems a better choice the code is easier to read than the SUBSTRING and CHARINDEX */
 
-
-
 -------------------------------------------------------------------
 -- The "Sold as Vacant" column or field has inconsistent entry.
 -- Standardize data from Y to Yes and N to No.
@@ -183,7 +175,7 @@ GROUP BY SoldAsVacant
 ORDER BY 2 -- COUNT(SoldAsVacant)
 
 SELECT SoldAsVacant,
-CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
+	CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
 	 WHEN SoldAsVacant = 'N' THEN 'No'
 END
 FROM [dbo.NashvilleHousing]
@@ -196,13 +188,10 @@ END
 
 /* Other alternative using COALESCE */
 
-
-
 -------------------------------------------------------------------
 -- Removing Duplicates. Not recommended to remove data in a raw database.
 -- Recommend to get a copy of the database and make changes on there.
 -------------------------------------------------------------------
-
 
 -- Below code causing issue
 -- Msg 102, Level 15, State 1, Line 222
