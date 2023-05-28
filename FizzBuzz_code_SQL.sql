@@ -16,14 +16,13 @@ SELECT * FROM fizzBuzzNum
 ORDER BY num;
 
 SELECT num,
-CASE
-WHEN num % 3 = 0 AND num % 5 = 0 THEN 'FizzBuzz'
-WHEN num % 3 = 0 THEN 'Fizz'
-
--- Can use the MOD function. Note in MicroSoft SQL Server Management Studio "MOD" is not recognized!
-WHEN MOD(num, 5) = 0 THEN 'Buzz'
-ELSE num
-END AS fizzbuzz_col
+    CASE
+        WHEN num % 3 = 0 AND num % 5 = 0 THEN 'FizzBuzz'
+        WHEN num % 3 = 0 THEN 'Fizz'
+    -- Can use the MOD function. Note in MicroSoft SQL Server Management Studio "MOD" is not recognized!
+        WHEN MOD(num, 5) = 0 THEN 'Buzz'
+    ELSE num
+    END AS fizzbuzz_col
 FROM fizzBuzzNum;
 
 
